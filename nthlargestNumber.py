@@ -1,25 +1,24 @@
 from flask import Flask
 
-app = Flask(_name_)
+
+# If `entrypoint` is not defined in app.yaml, App Engine will look for an app
+# called `app` in `main.py`.
+app = Flask(__name__)
 
 
 @app.route('/')
-def hello(n):
-    return """"
-We Have a array of [1, 3, 4, 2, 6, 7, 7, 7, 9].
-give a number after url/ between 1 - 9
-"""
+def hello():
+    """Return a friendly HTTP greeting."""
+    # List of Integers
+    numbers = [1, 3, 4, 2]
+ 
+    #Sorting list of Integers
+    numbers.sort()
+    return "2nd largest number from the given list is "+ str(numbers[1])
 
 
-@app.route('/<int:n>')
-def nthLargest(n):
-    if(1 <= n <= 9):
-        numbers = [1, 3, 4, 2, 6, 7, 7, 7, 9]
-        numbers.sort()
-        return n+"th largest number from the given list is " + str(numbers[~n])
-    else:
-        return "Wrong input"
-
-
-if _name_ == '_main_':
+if __name__ == '__main__':
+    # This is used when running locally only. When deploying to Google App
+    # Engine, a webserver process such as Gunicorn will serve the app. You
+    # can configure startup instructions by adding `entrypoint` to app.yaml.
     app.run(host='127.0.0.1', port=8080, debug=True)
